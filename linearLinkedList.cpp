@@ -56,12 +56,19 @@ x->next=temp;
 }
 void displayList(Node * head)
 {
-Node * temp= head;
-while(temp!=NULL)
+if(head==NULL)
 {
-cout<<temp->data<<endl;
+cout<<"List Empty !"<<endl;
+return;
+}
+Node * temp= head;
+while(temp->next!=NULL)
+{
+cout<<temp->data<<" --> ";
 temp=temp->next;
 }
+cout<<temp->data;
+cout<<endl;
 }
 void deleteNode(int d,Node *& head)
 {
@@ -194,24 +201,100 @@ x--;
 }
 return temp->data;
 }
+}
 int nthNodeFromEndTwoPointers(Node *& head,int n)
+
+/// we have to move the main ptr len-n+1 ahead of its initial posn so we move reff pointer n nodes ahead and move each of them len-n times ahead !
 {
 int len=lengthList(head);
 if(n<0 || n>len)
 {
 return -1;
 }
+Node * main=new Node;
+Node * reff=new Node;
+main=head;
+reff=head;
+
+while(n!=0 && reff!=NULL)
+{
+reff=reff->next;
+n--;
+}
+while(reff!=NULL)
+{
+main=main->next;
+reff=reff->next;
+}
+return main->data;
+
+}
+int middleElementUsingTwoPointers(Node *& head)
+{
+if(head==NULL)
+ return -1;
+
+Node * slow=new Node;
+Node * fast=new Node;
+slow=fast=head;
+
+while(fast!=NULL && fast->next!=NULL)
+{
+slow=slow->next;
+fast=fast->next->next;
+}
+return slow->data;
+}
+int numOfTimesInt(int val,Node *& head)
+{
+int cnt=0;
+Node * temp=new Node;
+temp=head;
+while(temp!=NULL)
+{
+if(temp->data==val)
+{
+cnt++;
+}
+temp=temp->next;
+}
+return cnt;
+}
+int numOfTimesIntRecursive(Node *& head,int val)
+{
+if(head==NULL) return 0;
+else return (head->data==val)+numOfTimesIntRecursive(head->next,val); ///using boolean output to add 1 to the output sum
+}
+bool detectCycle(Node *& head)
+{
+Node * slow=new Node;
+Node * fast= new Node;
+slow=fast=head;
+while(fast!=NULL && fast->next!=NULL)
+{
+slow=slow->next;
+fast=fast->next->next;
+if(slow==fast)
+{
+return true;
 }
 }
+return false;
+}
+
 int main()
 {
 Node * head=NULL;
 add_node(5,head);
 add_node(10,head);
 add_node(15,head);
+add_node(66,head);
+add_node(66,head);
 add_node(13,head);
 add_node(33,head);
+add_node(66,head);
+
 displayList(head);
 cout<<endl;
-cout<<nthNodeFromEnd(head,2);
+
 }
