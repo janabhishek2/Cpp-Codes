@@ -265,6 +265,41 @@ int numOfTimesIntRecursive(Node *& head,int val)
 if(head==NULL) return 0;
 else return (head->data==val)+numOfTimesIntRecursive(head->next,val); ///using boolean output to add 1 to the output sum
 }
+int lengthOfCycle(Node *& head)
+{
+Node * slow=new Node;
+Node * fast=new Node;
+Node * ans;
+
+bool cycle=false;
+slow=fast=head;
+while(fast->next!=NULL && fast!=NULL && slow)
+{
+slow=slow->next;
+fast=fast->next->next;
+
+if(slow==fast)
+{
+ans=slow;
+cycle=true; /// cycle found
+break;
+}
+}
+if(cycle==false) return 0;
+else
+{
+Node * temp;
+temp=ans;
+int cnt=1;
+while(temp->next!=ans)
+{
+temp=temp->next;
+cnt++;
+}
+return cnt;
+}
+
+}
 bool detectCycle(Node *& head)
 {
 Node * slow=new Node;
@@ -281,18 +316,109 @@ return true;
 }
 return false;
 }
+bool isPalindrome(Node *& head)
+{
+int arr[10];
+int x=0;
+int len=lengthList(head);
+if(len==1)
+{
+return true;
+}
+int mid=len/2;
+Node * temp=head;
+for(int i=0;i<mid;i++)
+    {
+        arr[x]=temp->data;
+        x++;
+        temp=temp->next;
+    }
 
+
+if(len%2!=0)
+{
+temp=temp->next;
+}
+x--;
+while(temp!=NULL)
+{
+if(temp->data==arr[x])
+{
+x--;
+temp=temp->next;
+}
+else
+{
+return false;
+}
+}
+if(x==-1) return true;
+}
+void removeDuplicatesInSortedList(Node *& head)
+{
+if(head==NULL) return;
+Node * temp=head;
+while(temp->next!=NULL)
+{
+Node *x;
+if(temp->data==temp->next->data)
+{
+x=temp->next->next;
+free(temp->next);
+temp->next=x;
+
+}
+else
+{
+temp=temp->next;
+}
+}
+}
+void removeDuplicatesInSortedListRecursive(Node *& head)
+{
+if(head==NULL)
+{
+return;
+}
+if(head->next!=NULL)
+{
+if(head->next->data==head->data)
+{
+Node * tofree=head->next;
+head->next=head->next->next;
+free(tofree);
+removeDuplicatesInSortedListRecursive(head);
+}
+else
+{
+removeDuplicatesInSortedListRecursive(head->next);
+}
+}
+}
+void removeDuplicatesInUnSortedList(Node *& head)
+{
+Node *x=head;
+while(x->next!=NULL)
+{
+int dx=x->data;
+Node * curr=x->next->next;
+Node * prev=x->next;
+while(curr!=NULL)
+{
+
+}
+x=x->next;
+}
+}
 int main()
 {
 Node * head=NULL;
-add_node(5,head);
-add_node(10,head);
-add_node(15,head);
-add_node(66,head);
-add_node(66,head);
-add_node(13,head);
+add_node(25,head);
 add_node(33,head);
-add_node(66,head);
+add_node(33,head);
+add_node(33,head);
+add_node(55,head);
+
 
 displayList(head);
 cout<<endl;
