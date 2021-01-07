@@ -40,7 +40,7 @@ void print(Node* &head)
 void reverseLL(Node * &head)
 {
     Node * prev=NULL;
-    Node *curr=head;
+    Node * curr=head;
     Node * next=NULL;
 
     while(curr!=NULL)
@@ -80,8 +80,48 @@ bool isPalindrome(Node *& head)
         }
 
         reverseLL(newHead);
-           prev->next=newHead;
-        print(head);
+           prev->next=NULL;
+           Node *first=head;
+           Node *second=newHead;
+      while(first!=NULL && second!=NULL)
+      {
+
+          if(first->data!=second->data)
+          {
+              return false;
+          }
+          first=first->next;
+          second=second->next;
+      }
+      return true;
+    }
+    else
+    {
+        int ri=x/2;
+        Node *newHead = head;
+        Node *prev=NULL;
+        while(ri!=0)
+        {
+            prev=newHead;
+            newHead=newHead->next;
+            ri--;
+        }
+        newHead=newHead->next;
+        reverseLL(newHead);
+           prev->next=NULL;
+           Node *first=head;
+           Node *second=newHead;
+      while(first!=NULL && second!=NULL)
+      {
+
+          if(first->data!=second->data)
+          {
+              return false;
+          }
+          first=first->next;
+          second=second->next;
+      }
+      return true;
     }
 }
 int main()
@@ -89,9 +129,9 @@ int main()
     Node * head=NULL;
     insertElement(head,5);
     insertElement(head,15);
+
     insertElement(head,25);
-    insertElement(head,30);
-    insertElement(head,5);
-insertElement(head,53);
-    isPalindrome(head);
+    insertElement(head,15);
+insertElement(head,5);
+    cout<<isPalindrome(head);
 }
