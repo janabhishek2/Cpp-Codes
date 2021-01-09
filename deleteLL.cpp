@@ -1,7 +1,4 @@
 
-
-
-
 #include<iostream>
 using namespace std;
 class Node{
@@ -43,39 +40,34 @@ void print(Node* &head)
         temp=temp->next;
     }
 }
-void reverse2Pointer(Node *&head)
-{
-    typedef uintptr_t x;
 
-    Node *curr=head;
-    Node *prev=NULL;
+ void deleteItem(int k , Node *& head)
+ {
+     Node *prev=NULL;
+     Node *curr=head;
 
-    while(curr)
-    {
-        curr=(Node*)(x(prev)^x(curr)^x(curr->next)^x(curr->next=prev)^x(prev=curr));
-    }
-    head=prev;
-    return;
-}
-void reverseLL(Node *&head)
-{
-
-    Node * curr=head;
-    Node *prev=NULL;
-    Node *n=NULL;
-
-    while(curr)
-    {
-        n=curr->next;
-        curr->next=prev;
-
-
-        prev=curr;
-        curr=n;
-
-    }
-    head=prev;
-}
+     while(curr->data!=k)
+     {
+         prev=curr;
+         curr=curr->next;
+     }
+     /// If key is at start
+     if(prev==NULL)
+     {
+         head=curr->next;
+         Node *p =curr;
+         curr=curr->next;
+         delete(p);
+     }
+     /// For all other cases
+     else
+     {
+         Node *p = curr;
+         curr=curr->next;
+         prev->next=curr;
+         delete(p);
+     }
+ }
 int main()
 {
     Node * head=NULL;
@@ -88,7 +80,7 @@ int main()
     insertElement(head,6);
 
 
-    reverse2Pointer(head);
+    deleteItem(6,head);
 
 
     print(head);
