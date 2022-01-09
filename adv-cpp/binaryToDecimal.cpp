@@ -28,11 +28,39 @@ int convertDecimalToBinary(int n)
     }
     return ans;
 }
+string stringReverse(string str)
+{
+
+    int start=0;
+    int end=str.length()-1;
+    while(start<=end)
+    {
+        swap(str[start],str[end]);
+        start++;
+        end--;
+    }
+    return str;
+}
+string convertDecimalToHex(int n)
+{
+    string ans ="";
+    while(n>0)
+    {
+        int rem=n%16;
+        if(rem<=9)
+        {
+            ans+=char(48+rem);
+        }
+        else
+        {
+            ans+=char(55+rem);
+        }
+        n/=16;
+    }
+    return stringReverse(ans);
+}
 int main()
 {
-    int n;
-    cout<<"Enter decimal ";
-    cin>>n;
-    cout<<convertDecimalToBinary(n);
+
     return 0;
 }
