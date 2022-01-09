@@ -1,4 +1,5 @@
 #include<iostream>
+#include<cmath>
 using namespace std;
 int convertBinaryToDecimal( int binary )
 {
@@ -16,14 +17,16 @@ int convertBinaryToDecimal( int binary )
 int convertDecimalToBinary(int n)
 {
 
-    int binary=1;
+    int ans=0;
+    int i=0;
     while(n>0)
     {
         int rem=n%2;
-        binary=binary*10+rem;
+        ans=ans+rem*pow(10,i);
+        i++;
         n/=2;
     }
-    return binary;
+    return ans;
 }
 int main()
 {
