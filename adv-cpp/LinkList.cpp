@@ -14,21 +14,104 @@ public:
     }
 
 };
-int lengthLL(Node *&head){
-int len=0;
-Node * temp=head;
-while(temp!=NULL){
-       temp=temp->next;
-       len++;
+void reverseList(Node *&head)
+{
+
+    Node * curr=head;
+    Node *prev=NULL;
+    Node * next=curr->next;
+
+    while(curr!=NULL)
+    {
+        next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+    }
+    head=prev;
+    return;
 }
-return len;
-}
-void reverseKnodes(Node* &head,int k){
-       int cnt=0;
-       int length=lengthLL(head);
-       for(int i=0;i<length;i=i+k){
+Node * sumOfTwoLists(Node *&head1, Node *&head2){
+       reverseList(head1);
+       reverseList(head2);
+
+       Node * head3;
+       Node *temp1=head1;
+       Node *temp2=head2;
+
+       int sum=0,rem=0;
+       while(temp1!=NULL || temp2!=NULL){
+              sum=temp1->data+temp2->data+rem;
 
        }
+
+
+}
+int lengthLL(Node *&head)
+{
+    int len=0;
+    Node * temp=head;
+    while(temp!=NULL)
+    {
+        temp=temp->next;
+        len++;
+    }
+    return len;
+}
+
+Node * reverseKnodesRec(Node * &head,int k)
+{
+
+    if (!head) return NULL;
+    Node* current = head;
+    Node* next = NULL;
+    Node* prev = NULL;
+    int count = 0;
+
+    /*reverse first k nodes of the linked list */
+    while (current != NULL && count < k)
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+        count++;
+    }
+
+    /* next is now a pointer to (k+1)th node
+    Recursively call for the list starting from current.
+    And make rest of the list as next of first node */
+    if (next != NULL)
+        head->next = reverseKnodesRec(current, k);
+
+    return prev;
+
+}
+void reverseKnodes(Node* &head,int k)
+{
+    int cnt=0;
+    int length=lengthLL(head);
+    Node *headx=head;
+    Node *curr=head;
+    Node *prev=NULL;
+    Node *next=curr->next;
+    for(int i=0; i<length; i=i+k)
+    {
+        headx=prev;
+        int j=0;
+        while(j<k && curr!=NULL)
+        {
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+
+            j++;
+        }
+        headx=prev;
+        prev->next=headx;
+    }
+
 }
 void insertInLL(Node* &head,int val)
 {
@@ -118,6 +201,45 @@ void deleteElementWithVal(int val,Node *&head)
     }
 
 }
+bool detectLoop(Node *&head)
+{
+    bool loopFound=false;
+    Node *fast=head;
+    Node *slow=head;
+    while( fast->next->next!=NULL && fast->next!=NULL)
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+        if(slow==fast)
+        {
+            loopFound=true;
+            break;
+        }
+    }
+    return loopFound;
+}
+
+void removeLoop(Node *&head)
+{
+
+    Node *slow=head;
+    Node *fast=head;
+    Node *prevSlow=slow;
+    do
+    {
+        prevSlow=slow;
+        fast=fast->next->next;
+        slow=slow->next;
+    }
+    while(fast!=slow);
+    Node *temp=head;
+    while(temp->next!=slow)
+    {
+        temp=temp->next;
+    }
+    temp->next=NULL;
+
+}
 void reverseLL(Node *&head)
 {
 
@@ -145,19 +267,29 @@ void reverseLL(Node *&head)
     }
 
 }
+
 int main()
 {
     Node *head=NULL;
+
+    Node *first=new Node(1);
+
+    Node *second=new Node(2);
+    Node *third=new Node(3);
+    Node *fourth=new Node(4);
+    head=first;
+    first->next=second;
+    second->next=third;
+    third->next=fourth;
+    fourth->next=NULL;
+
+
     printLL(head);
     cout<<endl;
-    reverseLL(head);
+    reverseList(head);
     printLL(head);
-    insertInLL(head,4);
-
-    insertInLL(head,5);
-
-    insertInLL(head,6);
-    insertInLL(head,7);
-
 
 }
+
+
+
