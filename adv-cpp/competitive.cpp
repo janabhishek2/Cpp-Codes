@@ -3,11 +3,12 @@ using namespace std;
 
 int main(){
 
-int n;
-cin>>n;
-int arr[100];
-for(int i=0;i<n;i++){
-       cin>>arr[i];
+int t;
+cin>>t;
+while(t--){
+  int x,y;
+cin>>x>>y;
+cout<<abs(x-y)<<endl;
 }
 
 return 0;
